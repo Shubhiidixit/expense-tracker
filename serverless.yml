@@ -1,0 +1,31 @@
+service: expense-tracker
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  environment:
+    DB_HOST: ${env:DB_HOST}
+    DB_USER: ${env:DB_USER}
+    DB_PASS: ${env:DB_PASS}
+    DB_NAME: ${env:DB_NAME}
+    JWT_SECRET: ${env:JWT_SECRET}
+
+functions:
+  register:
+    handler: auth/register.handler
+    events:
+      - http:
+          path: register
+          method: post
+  login:
+    handler: auth/login.handler
+    events:
+      - http:
+          path: login
+          method: post
+  addTransaction:
+    handler: transactions/addTransaction.handler
+    events:
+      - http:
+          path: transaction
+          method: post
